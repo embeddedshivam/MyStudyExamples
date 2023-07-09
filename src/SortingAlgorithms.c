@@ -76,6 +76,112 @@ void bubble_sort(int *A){
 	}
 }
 
+void quick(int *A, int N, int BEG, int END, int *LOCPTR){
+	int LEFT, RIGHT, temp;
+	LEFT=BEG; RIGHT=END;
+	*LOCPTR=BEG;
+step2:
+	while(*(A+*LOCPTR)<=*(A+RIGHT) && *LOCPTR!=RIGHT)
+		RIGHT--;
+	printf("RIGHT %d ", RIGHT);
+		if (*LOCPTR==RIGHT){
+			return;
+		}
+		if (*(A+*LOCPTR)>*(A+RIGHT)){
+			temp=*(A+*LOCPTR);
+			*(A+*LOCPTR) = *(A+RIGHT);
+			*(A+RIGHT) = temp;
+			*LOCPTR=RIGHT;
+		}
+	goto step3;
+step3:
+	while(*(A+*LOCPTR)>=*(A+LEFT) && *LOCPTR!=LEFT)
+		LEFT++;
+	printf("LEFT %d ", LEFT);
+	if (*LOCPTR==LEFT){
+				return;
+		}
+		if (*(A+*LOCPTR)>*(A+LEFT)){
+			temp=*(A+*LOCPTR);
+			*(A+*LOCPTR) = *(A+LEFT);
+			*(A+LEFT) = temp;
+			*LOCPTR=LEFT;
+		}
+	goto step2;
+
+}
+/*
+ * O(NlogN)
+ * Divide and Conquer
+ * A[0] is greater then some other elements of list.
+ * which will be kept left of that
+ * Then there will be two sub arrays, left and right
+ */
+void Quick_sort(int *A){
+	int LOC, LEFT, RIGHT, N=sizeof(A);
+
+	int BEG, END, TOP=-1;
+	int LOWER[10], UPPER[10];
+	if (N>1){
+		TOP++;
+		LOWER[TOP] = 0;
+		UPPER[TOP] = N-1;
+	}
+	while(TOP!=-1){
+		BEG = LOWER[TOP];
+		END = UPPER[TOP];
+		TOP--;
+		quick(A, N, BEG, END, &LOC);
+		if (BEG<LOC-1){
+			TOP++;
+			LOWER[TOP]=BEG;
+			UPPER[TOP]=LOC-1;
+		}
+		if (LOC+1<END){
+			TOP++;
+			LOWER[TOP]=LOC+1;
+			UPPER[TOP]=END;
+		}
+	}
+}
+
+struct Heap{
+	int *array;
+	int count;
+	int capacity;
+};
+
+void CreateHeap(){
+}
+void BuildHeap(){
+}
+
+void heap_sort(int *A){
+	struct HEAP *h;
+
+
+}
+
+void mergepass(int *A,int N, int L, int *B){
+
+}
+
+/*
+ * MERGE SORT is example for divide and conquer
+ */
+void MergeSort(int *A){
+	// A = {1, 3, 8, 2, 6, 4}
+	//
+	int N=sizeof(A);
+	int L=1, B[N];
+	while(L<N){
+
+	}
+
+}
+
+
+
 
 void RunSorting(int *Array, int Algorithm){
 
@@ -94,11 +200,11 @@ void RunSorting(int *Array, int Algorithm){
 			return;
 		case QUICK_SORT:
 			printf("QUICK_SORT\t");
-			bubble_sort(Array);
+			Quick_sort(Array);
 			return;
 		case HEAP_SORT:
 			printf("HEAP_SORT\t");
-			bubble_sort(Array);
+			heap_sort(Array);
 			return;
 		case MERGE_SORT:
 			printf("MERGE_SORT\t");
